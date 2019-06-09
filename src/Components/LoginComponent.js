@@ -28,6 +28,8 @@ class LoginComponent extends Component {
             if(data.status === 200) {
                 console.log(data.data)
                 this.props.history.push('/', {user: data.data.user})
+
+                
             }
         }).catch(err => {
             console.log(err.response)
