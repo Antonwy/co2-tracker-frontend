@@ -47,7 +47,7 @@ class RegisterComponent extends Component {
                     <input type="text" placeholder="Username" />
                     <input type="email" placeholder="Email" />
                     <input type="password" placeholder="Password" />
-                    <button type="submit">Register</button>
+                    <button className="button" type="submit">Register</button>
                 </form>
                 <p>Already have an account? <span onClick={this.handleLogin}>Login</span></p>
                 { error ? <a>Something went wrong...</a> : <div></div>}

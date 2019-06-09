@@ -26,9 +26,11 @@ class LoginComponent extends Component {
             email, password
         }).then(data => {
             if(data.status === 200) {
-                this.props.history.push('/')
+                console.log(data.data)
+                this.props.history.push('/', {user: data.data.user})
             }
         }).catch(err => {
+            console.log(err.response)
             if(err) {
                 this.setState({error: true})
             }
@@ -47,7 +49,7 @@ class LoginComponent extends Component {
                 <form onSubmit={this.handleOnSubmit}>
                     <input type="email" placeholder="Email" />
                     <input type="password" placeholder="Password" />
-                    <button type="submit">Login</button>
+                    <button className="button" type="submit">Login</button>
                 </form>
                 <p>No account yet? <span onClick={this.handleRegister}>Register</span></p>
                 { error ? <a>Something went wrong...</a> : <div></div>}

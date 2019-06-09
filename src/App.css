@@ -38,7 +38,7 @@
   border-color: rgb(60, 235, 60);
 }
 
-.loginComponent button {
+.button {
   margin-top: 10px;
   width: 90vw;
   max-width: 200px;
@@ -52,7 +52,11 @@
   transition: background 250ms, color 250ms;
 }
 
-.loginComponent button:hover {
+.loginComponent .button {
+  margin-top: 10px;
+}
+
+.button:hover {
   background-color: white;
   color: black;
 }
@@ -61,4 +65,34 @@
   font-weight: bold;
   text-decoration: underline;
   cursor: pointer;
+}
+
+.dashboardContainer {
+  background: url(./Media/Back.png);
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.dashboardContainer>h1:first-child {
+  opacity: .8;
+}
+
+.dashboardContainer > .scoreHeader {
+  font-size: 5em;
+}
+
+.dashboardContainer > .button {
+  border-color: black;
+  color: black;
+}
+
+.dashboardContainer > .button:hover {
+  background-color: black;
+  color: white;
 }
