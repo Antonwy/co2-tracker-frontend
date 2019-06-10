@@ -210,24 +210,45 @@
 
 .infoContainer {
   width: 90vw;
-  height: 50vh;
   padding: 20px;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   flex-wrap: wrap;
+  flex-direction: column;
 }
 
 .chartContainer {
   height: 50vh;
-  max-height: 300px;
-  width: 60vw;
-  max-width: 500px;
+  width: calc(100% - 40px);
   background-color: white;
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 20px;
   margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+}
+
+.chartContainer>div {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+}
+
+.barContainer {
+  height: 100%;
+  width: 100%;
+}
+
+.pieContainer {
+  height: 100%;
+  width: 100%;
 }
 
 .scoreContainer {
@@ -235,6 +256,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.addActivityBtn {
+  margin: 20px;
 }
 
 
@@ -247,6 +272,10 @@
     width: 100vw;
     margin-right: 20px;
     height: auto;
+  }
+
+  .chartContainer {
+    flex-direction: column;
   }
   
 }

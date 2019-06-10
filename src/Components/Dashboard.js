@@ -2,9 +2,8 @@ import React, { Component } from 'react'
 import Axios from 'axios';
 import { URL } from '../Constants';
 import AddActivityComponent from './AddActivityComponent';
-import { Bar } from 'react-chartjs-2';
+import { Bar, Pie } from 'react-chartjs-2';
 import Logo from '../Media/Logo.png'
-
 
 export default class Dashboard extends Component {
 
@@ -33,12 +32,53 @@ export default class Dashboard extends Component {
                     data: [65, 59, 80, 81, 56, 55, 40]
                   }
                 ]
+            },
+            pieData: {
+                labels: [
+                    'Red',
+                    'Green',
+                    'Yellow'
+                ],
+                datasets: [{
+                    data: [300, 50, 100],
+                    backgroundColor: [
+                        '#247BA0',
+                        '#70C1B3',
+                        '#B2DBBF',
+                        '#F3FFBD',
+                        '#FF1654',
+                        '#FFCDB2',
+                        '#FFB4A2',
+                        '#E5989B',
+                        '#B5838D',
+                        '#6D6875',
+                        '#2B2D42',
+                        '#8D99AE',
+                        '#EDF2F4',
+                        '#D90429',
+                    ],
+                    hoverBackgroundColor: [
+                        '#247BA0',
+                        '#70C1B3',
+                        '#B2DBBF',
+                        '#F3FFBD',
+                        '#FF1654',
+                        '#FFCDB2',
+                        '#FFB4A2',
+                        '#E5989B',
+                        '#B5838D',
+                        '#6D6875',
+                        '#2B2D42',
+                        '#8D99AE',
+                        '#EDF2F4',
+                        '#D90429',
+                    ]
+                }]
             }
         }
     }
 
     componentDidMount() {
-        
         Axios.get(URL + '/users/' + this.props.location.state.user.id)
             .then(user => {
                 this.setDataState(user)
@@ -46,9 +86,10 @@ export default class Dashboard extends Component {
     }
 
     setDataState = (user) => {
-        const {data, entries} = this.state
+        const {data, pieData} = this.state
         console.log(user)
         let modData = {...data}
+        let modPieData = {...pieData}
 
         modData.labels = user.data.entries.map(entry => {
             let date = new Date(entry.date);
@@ -59,7 +100,15 @@ export default class Dashboard extends Component {
             return entry.score
         })
 
-        this.setState({user: user.data.user, data: modData})
+        modPieData.labels = user.data.pieData.map(pieData => (
+            pieData.name
+        ))
+
+        modPieData.datasets[0].data = user.data.pieData.map(pieData => (
+            pieData.amount
+        ))
+
+        this.setState({user: user.data.user, data: modData, pieData: modPieData})
     }
 
     handleClick = () => {
@@ -83,7 +132,7 @@ export default class Dashboard extends Component {
             return <div>Loading...</div>
         }
 
-        const {user, showPopup, data} = this.state;
+        const {user, showPopup, data, pieData} = this.state;
         return (
             <div className="dashboardContainer">
                 <div className="headerContainer">
@@ -95,17 +144,28 @@ export default class Dashboard extends Component {
                     <div className="scoreContainer">
                         <h1>Your CO2 score:</h1>
                         <h1 className="scoreHeader">{user.score}</h1>
+                        <button onClick={this.handleClick} className="addActivityBtn button">Add Activity</button>
                     </div>
                     <div className="chartContainer">
-                        <Bar
-                            data={this.state.data}
-                            options={{
-                                maintainAspectRatio: false
-                            }}
-                        />
+                        <div>
+                            <h2>Last 7 days:</h2>
+                            <div className="barContainer">
+                                <Bar
+                                    data={this.state.data}
+                                    options={{
+                                        maintainAspectRatio: false
+                                    }}
+                                />
+                            </div>
+                        </div>
+                        <div>
+                            <h2>Transportation method:</h2>
+                            <div className="pieContainer">
+                                <Pie data={pieData} />
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <button onClick={this.handleClick} className="button">Add Activity</button>
                 {
                     showPopup ?
                     <AddActivityComponent email={user.email} save={this.handleSave} close={this.handleClick} />
