@@ -26,13 +26,9 @@ class LoginComponent extends Component {
             email, password
         }).then(data => {
             if(data.status === 200) {
-                console.log(data.data)
-                this.props.history.push('/', {user: data.data.user})
-
-                
+                this.props.history.push('/', {user: data.data.user, entries: data.data.entries})
             }
         }).catch(err => {
-            console.log(err.response)
             if(err) {
                 this.setState({error: true})
             }
