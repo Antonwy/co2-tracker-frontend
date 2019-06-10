@@ -11,7 +11,8 @@ export default class Dashboard extends Component {
     constructor(props) {
         super(props)
 
-        if(!props.location.state.user) {
+        console.log(props)
+        if(!props.location.state) {
             return props.history.push('/login')
         }
 
@@ -79,6 +80,7 @@ export default class Dashboard extends Component {
     }
 
     componentDidMount() {
+        if(!this.props.location.state) return
         Axios.get(URL + '/users/' + this.props.location.state.user.id)
             .then(user => {
                 this.setDataState(user)
@@ -128,7 +130,7 @@ export default class Dashboard extends Component {
 
     render() {
 
-        if(!this.props.location.state.user) {
+        if(!this.props.location.state) {
             return <div>Loading...</div>
         }
 
@@ -142,7 +144,7 @@ export default class Dashboard extends Component {
                 <h1 className="welcomeMessage">{`Hi ${user.username}!`}</h1>
                 <div className="infoContainer">
                     <div className="scoreContainer">
-                        <h1>Your CO2 score:</h1>
+                        <h2>Your CO2 score:</h2>
                         <h1 className="scoreHeader">{user.score}</h1>
                         <button onClick={this.handleClick} className="addActivityBtn button">Add Activity</button>
                     </div>
@@ -151,7 +153,7 @@ export default class Dashboard extends Component {
                             <h2>Last 7 days:</h2>
                             <div className="barContainer">
                                 <Bar
-                                    data={this.state.data}
+                                    data={data}
                                     options={{
                                         maintainAspectRatio: false
                                     }}

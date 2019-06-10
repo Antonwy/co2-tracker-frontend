@@ -277,5 +277,14 @@
   .chartContainer {
     flex-direction: column;
   }
+
+  .welcomeMessage {
+    font-size: 3em;
+  }
+
+  .scoreHeader {
+    font-size: 3em;
+  }
+
   
 }
